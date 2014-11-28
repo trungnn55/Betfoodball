@@ -15,8 +15,9 @@ class CreateUserBetMatchTable extends Migration {
 		//
 		Schema::create('userbetmatch',function(Blueprint $table){
 			$table->increments('id');
-			$table->int('idmatch');
-			$table->int('iduser');
+			$table->integer('idmatch');
+			$table->integer('iduser');
+			$table->integer('teampick');
 			$table->timestamps();
 		});
 	}

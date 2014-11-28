@@ -3,21 +3,34 @@
 @extends('header')
 	
 @section('opening')
-<!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script>
 		$(document).ready(function(){
   			$('.click').click(function(){
   				$('td').removeClass('selected');
-					$(this).addClass('selected');
-
+				$(this).addClass('selected');
+				
+				$.ajax({ url : "BetController.php",
+  							datatype : "text",
+  							type : "post",
+  							data : {  matchid: event.target.id}, 
+  						});
+  					console.log( event.target.id );
   			});
-		});
+  		});
+
+  			// $(document).ready(function(){
+  			// 	$('image').click(function(){
+
+  			// 	});
+  			// });
+		
 	</script>
 	<style type="text/css">
 	.selected{
 		background-color: green;
 	}
-	</style> -->
+	</style>
 @stop
 
 @section('content')
@@ -50,18 +63,21 @@
 
 				<div class="table-responsive">
 					<table class="table table-hover">
-
+						{{ Form::open(array('route'=>array('postmatch', $team1[$id]->matchid), 'method'=>'post')) }}
+						
 						<tr>
-							<td class= "click">{{ HTML::image($team1[$id]->logo). "<br>" .  $team1[$id]->name}} 
+							<td class= "click">{{ HTML::image($team1[$id]->logo,'', array('id'=>$team1[$id]->teamid)). "<br>" .  $team1[$id]->name}} 
 							<td><span style="width: 10%; float: left; text-align: center; margin-top: 150px">
 								<h3>VS</h3>
 								<h3> {{ 'Rate: '. $team1[$id]->rate }}</h3>
 							</span></td>
-							<td class = "click">{{ HTML::image($team2[$id]->logo). "<br>" .  $team2[$id]->name }}</td>
+							<td class = "click">{{ HTML::image($team2[$id]->logo,'', array('id'=>$team2[$id]->teamid)). "<br>" .  $team2[$id]->name }}</td>
 						</tr>
 
-						{{ Form::open(array('route'=>array('postmatch', $team1[$id]->id), 'method'=>'post')) }}
-						{{ Form::submit('Submit') }}
+						<p>asd: </p>
+
+						<input type="submit" name="clickme" id="clickme" onclick=$.ajax value="Submit"/>
+						<!--{{ Form::submit('Submit') }}-->
 						{{ Form::close() }}
 
 					</table>

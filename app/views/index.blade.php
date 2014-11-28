@@ -55,7 +55,7 @@
 					@for($i = 0; $i < count($team1); $i++)
 						<tr>
 							<td class= "click">{{ HTML::image($team1[$i]->logo). "<br>" .  $team1[$i]->name}} 
-							{{ link_to_route('match','Info', $team1[$i]->id) }}
+							{{ link_to_route('match','Info', $team1[$i]->matchid) }}
 							<td><span style="width: 10%; float: left; text-align: center; margin-top: 150px"><h3>VS</h3></span></td>
 							<td class = "click">{{ HTML::image($team2[$i]->logo). "<br>" .  $team2[$i]->name }}</td>
 						</tr>
