@@ -31,15 +31,15 @@ class BetController extends BaseController{
 
 	public function postMatch($id){
 
-		dd($_POST);
 		// Add username in userbetmatch table
 		$user = Auth::User();
 		$userbet = new BetMatch();
 		$userbet->iduser = $user->id;
 		$userbet->idmatch = $id;
-		//dd(Input::get('teampick'));
-		//$userbet->teampick = Input::get('teampick');
+		$userbet->teampick = Input::get('choosen-team');
 		$userbet->save();
+
+		return Redirect::route('index');
 	}
 }
 
