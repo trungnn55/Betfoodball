@@ -1,5 +1,7 @@
 @extends('layout')
 
+@extends('header')
+
 @section('opening')
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script>
@@ -35,8 +37,6 @@
 
 @section('content')
 
-@include('header')
-
 <div id="page-wrapper">
 	<div class="container-fluid">
 		<div class="col-lg-12">
@@ -44,7 +44,7 @@
 			<div class="col-lg-8">
 
 				<div class="table-responsive">
-					{{ Form::open(array('route'=>array('postmatch', $team1[$id]->matchid), 'method'=>'post', 'class'=>'match')) }}
+					{{ Form::open(array('route'=>array('postresult', $team1[$id]->matchid), 'method'=>'post', 'class'=>'match')) }}
 
 					<table class="table table-hover">
 						<tr>
@@ -65,19 +65,6 @@
 							<td></td>
 							<td> {{ Form::submit('Submit') }} </td>
 							<td></td>
-						</tr>
-						<tr>
-							<td>
-								@foreach( $userbetteam1 as $value )
-									<p> {{ $value->betname }} </p>
-								@endforeach
-							</td>
-							<td></td>
-							<td>
-								@foreach( $userbetteam2 as $value )
-									<p> {{ $value->betname }} </p>
-								@endforeach
-							</td>
 						</tr>
 					</table>
 

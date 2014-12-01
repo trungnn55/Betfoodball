@@ -38,6 +38,11 @@ class Account extends Eloquent implements UserInterface, RemindableInterface {
 			),
 	);
 
+	public static function getUserBet(){
+
+		return DB::table('users')->join('userbetmatch' );
+	}
+
 	public function getPasswordAttribute($input){
 
 		return ucfirst($input);

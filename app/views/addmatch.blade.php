@@ -20,9 +20,11 @@
 	<p>Team2: {{ Form::select('team2', array($select)) }}</p>
 	<p>Rate :  {{ Form::text('rate') }}</p>
 	<p>{{ Form::submit('Submit') }}</p>
-
-	<p>{{ HTML::linkRoute('logout', 'Logout') }}</p>
+	
 	<p>{{ HTML::linkRoute('admin.addteam', 'Add Team') }}</p>
+	<p>{{ HTML::linkRoute('index', 'Home') }}</p>
+	<p>{{ HTML::linkRoute('logout', 'Logout') }}</p>
+	
 
 </table>
 {{ Form::close() }}

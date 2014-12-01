@@ -23,11 +23,26 @@ class Match extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 
+	public static $rules = array(
+		 'addteam' => array(
+		 	'name'=>'required|unique:teams',
+		 	'logo'=>'required',
+		),
+	); 
+
 	public static function getMatchesTeam($value){
+
 		return DB::table('matchs')->join('teams', $value, '=', 'teams.name')
 								->select('matchs.id as matchid', 'teams.logo', 'teams.name', 'matchs.rate', 'teams.id as teamid')
+								->where('matchs.result', '=', '')
 								->orderBy('matchs.id', 'desc')->limit(5)->get();
 	}
 
+	public static function getResult($value){
 
+		return DB::table('matchs')->join('teams', $value, '=', 'teams.name')
+								->select('matchs.id as matchid', 'teams.logo', 'teams.name', 'matchs.rate', 'teams.id as teamid')
+								->where('matchs.result', '!=', '')
+								->orderBy('matchs.id', 'desc')->limit(5)->get();
+	}
 }

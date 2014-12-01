@@ -8,19 +8,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Bootstrap Admin Template</title>
+    <title>BET</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="bootstrap/css/sb-admin.css" rel="stylesheet">
+    <link href="{{ url('bootstrap/css/sb-admin.css') }}" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="bootstrap/css/plugins/morris.css" rel="stylesheet">
+    <link href="{{ url('bootstrap/css/plugins/morris.css') }}" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="bootstrap/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ url('bootstrap/font-awesome-4.1.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
     @yield('opening')
 

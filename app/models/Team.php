@@ -16,6 +16,12 @@ class Team extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $table = 'teams';
 
+	public static function getTeamWin(){
+
+		return DB::table('teams')->join('matchs', 'matchs.result', '=', 'teams.id')
+								->select('teams.name');
+	}
+
 	/**~
 	 * The attributes excluded from the model's JSON form.
 	 *

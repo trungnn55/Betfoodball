@@ -1,4 +1,4 @@
-<div id="wrapper">
+<div id="wrapper" >
 
         <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -20,6 +20,11 @@
                 {{ HTML::linkRoute('logout', 'Logout') }}
             </li>
         </ul>
+       <!--  <ul class="nav navbar-right top-nav">
+            <li class="dropdown">
+                {{ HTML::linkRoute('changepassword', 'Change Password') }}
+            </li>
+        </ul> -->
         <h3 style ="text-align: center; color: red">NADIA BET FOODBALL GROUP</h3>
 
     </nav>
