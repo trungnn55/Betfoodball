@@ -55,18 +55,42 @@ class BetController extends BaseController{
 
 				$temp = $userbet::find($value->id);
 				$temp->teampick = Input::get('choosen-team');
+				$temp->betmoney = Input::get('betmoney');
 				$temp->save();
 			
 				return Redirect::route('match', $id);
 			}
 		}
 
-		// dd($user->name);
 		$userbet->betname = $user->name;
 		$userbet->idmatch = $id;
 		$userbet->teampick = Input::get('choosen-team');
+		$userbet->betmoney = Input::get('betmoney');
 		$userbet->save();
 
 		return Redirect::route('match',$id);
+	}
+
+	public function getViewMatch($id){
+
+		$t1 = Match::getResult('matchs.team1');
+
+		foreach($t1 as $value){
+
+			$team1[$value->matchid] = $value; 
+		}
+
+		$t2 = Match::getResult('matchs.team2');
+
+		foreach($t2 as $value){
+
+			$team2[$value->matchid] = $value; 
+		}
+
+		$userbet = new BetMatch();
+		$userbetteam1 = $userbet::getShowUserBetMatch($id, $team1[$id]->teamid);
+		$userbetteam2 = $userbet::getShowUserBetMatch($id, $team2[$id]->teamid);
+
+		return View::make('viewmatch')->with( array( 'team1'=>$team1,'team2'=>$team2, 'id'=> $id, 'userbetteam1'=>$userbetteam1, 'userbetteam2'=>$userbetteam2  ) ); 
 	}
 }

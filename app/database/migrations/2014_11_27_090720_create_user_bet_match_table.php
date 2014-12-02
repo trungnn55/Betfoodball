@@ -18,6 +18,8 @@ class CreateUserBetMatchTable extends Migration {
 			$table->integer('idmatch');
 			$table->String('betname');
 			$table->integer('teampick');
+			$table->integer('betmoney');
+			$table->integer('money');
 			$table->timestamps();
 		});
 	}

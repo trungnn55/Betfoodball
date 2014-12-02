@@ -40,6 +40,7 @@ Route::post('admin/addteam', 'AdminController@postAdminAddTeam');
 // Match
 Route::get('match/{id}', array('as'=>'match', 'before'=>'guest', 'uses'=>'BetController@getMatch'));
 Route::post('match/{id}', array('as'=>'postmatch', 'uses'=> 'BetController@postMatch')); 
+Route::get('viewmatch/{id}', array('as'=>'viewmatch', 'before'=>'guest', 'uses'=>'BetController@getViewMatch'));
 
 // Update result
 Route::get('result/{id}', array('as'=>'result', 'before'=>'auth.admin', 'uses'=>'AdminController@getUpdateResult'));

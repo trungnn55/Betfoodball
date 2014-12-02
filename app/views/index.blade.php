@@ -48,10 +48,11 @@
 
 					@for($i = 0; $i < count($result1); $i++)
 						<tr>
-							<td class= "click">{{ HTML::image($result1[$i]->logo, '', array('class'=>'logo' )). "<br>" .  $result1[$i]->name}} 
+							<td class= "click">{{ HTML::image($result1[$i]->logo, '', array('class'=>'logo' )). "<br>" .  $result1[$i]->name}} </td>
 								<td>
 									<span style="width: 10%; float: left; text-align: center; margin-top: 50px">
-										{{ Team::find(Match::find($result1[$i]->matchid)->result)->name . " Win"}}
+								
+										{{ link_to_route('viewmatch','View Match', $result1[$i]->matchid) }}
 									</span>
 								</td>
 								<td class = "click">{{ HTML::image($result2[$i]->logo, '', array('class'=>'logo' ) ). "<br>" .  $result2[$i]->name }}</td>

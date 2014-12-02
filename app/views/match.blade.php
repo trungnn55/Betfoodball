@@ -55,27 +55,40 @@
 							<td>
 								<h3>VS</h3>
 								<h3> {{ 'Rate: '. $team1[$id]->rate }}</h3>
+								@if(Match::find($id)->status == "")
+
+									{{ Form::select('betmoney', array('100000'=>'100K','200000'=>'200K','300000'=>'300K','400000'=>'400K','500000'=>'500K')) }}
+								
+								@endif
 							</td>
 							<td class = "click">
+
 								{{ HTML::image($team2[$id]->logo,'', array('id'=>$team2[$id]->teamid, 'class'=>'logo' )) }}
+
 								<h3> {{ $team2[$id]->name }} </h3>
 							</td>
 						</tr>
+						@if(Match::find($id)->status == "")
 						<tr>
 							<td></td>
 							<td> {{ Form::submit('Submit') }} </td>
 							<td></td>
 						</tr>
+						@endif
 						<tr>
 							<td>
 								@foreach( $userbetteam1 as $value )
-									<p> {{ $value->betname }} </p>
+
+									<p> {{ $value->betname . ": " . $value->betmoney/1000 . "K"}} </p>
+								
 								@endforeach
 							</td>
 							<td></td>
 							<td>
 								@foreach( $userbetteam2 as $value )
-									<p> {{ $value->betname }} </p>
+								
+									<p> {{ $value->betname . ": " . $value->betmoney/1000 . "K"}} </p>
+								
 								@endforeach
 							</td>
 						</tr>

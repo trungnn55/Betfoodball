@@ -19,6 +19,7 @@ class CreateMatchTable extends Migration {
 			$table->String('team2');
 			$table->string('rate');
 			$table->string('result');
+			$table->string('status');
 			$table->timestamps();
 		});
 	}

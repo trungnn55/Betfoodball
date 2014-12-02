@@ -18,7 +18,7 @@ class AdminController extends BaseController{
 	}
 
 	public function postAdminAddMatch(){
-		
+		dd(substr(Input::get('rate'),2));
 		$match = new Match();
 		$match->team1 = Input::get('team1');
 		$match->team2 = Input::get('team2');
@@ -97,15 +97,19 @@ class AdminController extends BaseController{
 		$user = Auth::User();
 		$match = new Match();
 		$betmatch = Match::all();
-		
-		if( Input::get( 'choosen-team' ) == "" )
-
-			return Redirect::route('result', $id);
-
+		// $betmoney = new BetMatch();
+		// if($bet)
 		$temp = $match::find($id);
-		$temp->result = Input::get('choosen-team');
+		$temp->result = Input::get('team1goal') . ':' . Input::get('team2goal');
+
+		if(($match::find($id)->rate[0] + Input::get('team1goal')) > ($match::find($id)->rate[2] + Input::get('team2goal')))
+			$temp->status = $match::find($id)->team1;
+		else if(($match::find($id)->rate[0] + Input::get('team1goal')) < ($match::find($id)->rate[2] + Input::get('team2goal')))
+			$temp->status = $match::find($id)->team2;
+		else
+			$temp->status = "Hoà";
 		$temp->save();
 
-		return Redirect::route('result', $id);
+		return Redirect::route('index');
 	}
 }

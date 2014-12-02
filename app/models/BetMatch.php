@@ -31,8 +31,17 @@ class BetMatch extends Eloquent implements UserInterface, RemindableInterface {
 
 	public static function getShowUserBetMatch($matchid, $teamid){
 
-		return DB::table('userbetmatch')->where( 'userbetmatch.idmatch', '=', $matchid )
-										->where( 'userbetmatch.teampick', '=', $teamid )
-										->select( 'userbetmatch.betname' )->get();
+		return DB::table('userbetmatch')->where( 'idmatch', '=', $matchid )
+										->where( 'teampick', '=', $teamid )
+										->select( 'betname', 'betmoney')
+										->get();
+	}
+	
+	public static function getTotalWinBet(){
+
+		return DB::table('userbetmatch')->join('matchs', 'matchs.result', '=', 'userbetmatch.teampick')
+										->where('matchs.id', '=', 'userbetmatch.idmatch')
+										->get();
+
 	}
 }
