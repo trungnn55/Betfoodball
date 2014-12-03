@@ -25,7 +25,7 @@
                 {{ HTML::linkRoute('changepassword', 'Change Password') }}
             </li>
         </ul> -->
-        <h3 style ="text-align: center; color: red">NADIA BET FOODBALL GROUP</h3>
+        <h2 style ="text-align: center; color: red">NADIA BET FOODBALL GROUP</h2>
 
     </nav>
 </div>

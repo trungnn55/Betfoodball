@@ -34,6 +34,7 @@
 </head>
 
 <body>
+    
 
 @yield('content')
 @yield('closing')

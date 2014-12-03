@@ -6,7 +6,15 @@
 		.logo{
 			width: 120px;
 			height: 120px;
+		}		
+		p{
+			text-align: center;
 		}
+		h3{
+			margin-top: 50px;
+			text-align: center;
+		}
+
 	</style>
 @stop
 
@@ -16,6 +24,10 @@
 
 
 <div id="page-wrapper">
+	@if(Auth::User()->manager == 1)
+		{{ link_to_route('admin.addteam', 'Add Team') . "<br>"}}
+		{{ link_to_route('admin.addmatch', 'Add Match') }}
+	@endif
 	<div class="container-fluid">
 		<div class="col-lg-12">
 			
@@ -26,36 +38,38 @@
 					<table class="table table-hover">
 					@for($i = 0; $i < count($team1); $i++)
 						<tr>
-							<td class= "click">{{ HTML::image($team1[$i]->logo, '', array('class'=>'logo' )). "<br>" .  $team1[$i]->name}} 
-							<td><span style="width: 35%; float: left; text-align: center; margin-top: 5	0px">
-									<h3>VS</h3><br>
+							<td class= "click"><p>{{ HTML::image($team1[$i]->logo, '', array('class'=>'logo' )). "<br>" .  $team1[$i]->name}}</p></td> 
+							<td>
 								
-								{{ link_to_route('match','Choose Team', $team1[$i]->matchid) }} 
+								<h3>{{ link_to_route('match',$team1[$i]->league, $team1[$i]->matchid) }}</h3>
+
 								<p>
 								@if(Auth::user()->id == 1)
 
-									{{ link_to_route('result','update result', $team1[$i]->matchid) }}
+									{{ link_to_route('result','Update Result', $team1[$i]->matchid) }}
 
 								@endif
-								</span>
+								
 							</td>
-							<td class = "click">{{ HTML::image($team2[$i]->logo, '', array('class'=>'logo' ) ). "<br>" .  $team2[$i]->name }}</td>
+							<td class = "click"><p>{{ HTML::image($team2[$i]->logo, '', array('class'=>'logo' ) ). "<br>" .  $team2[$i]->name }}</p></td>
 							<td> 
 								</p>
 							</td>
 						</tr>
 					@endfor
 
-					@for($i = 0; $i < count($result1); $i++)
+					@for($i = count($result1)-1; $i >= 0; $i--)
 						<tr>
-							<td class= "click">{{ HTML::image($result1[$i]->logo, '', array('class'=>'logo' )). "<br>" .  $result1[$i]->name}} </td>
+							<td class= "click"><p>{{ HTML::image($result1[$i]->logo, '', array('class'=>'logo' )). "<br>" .  $result1[$i]->name}}</p> </td>
 								<td>
-									<span style="width: 10%; float: left; text-align: center; margin-top: 50px">
-								
-										{{ link_to_route('viewmatch','View Match', $result1[$i]->matchid) }}
-									</span>
+										<h3> {{ $result1[$i]->league }} </h3>
+										<p>{{ link_to_route('viewmatch','View Match', $result1[$i]->matchid) }}</p>
+										@if(Auth::user()->id == 1)
+
+											<p>{{ link_to_route('updateresult', 'ReUpdate Result', $result1[$i]->matchid)}}</p>
+										@endif
 								</td>
-								<td class = "click">{{ HTML::image($result2[$i]->logo, '', array('class'=>'logo' ) ). "<br>" .  $result2[$i]->name }}</td>
+								<td class = "click"><p>{{ HTML::image($result2[$i]->logo, '', array('class'=>'logo' ) ). "<br>" .  $result2[$i]->name }}</p></td>
 							</td>
 						</tr>
 					@endfor

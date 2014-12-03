@@ -42,6 +42,8 @@ Route::get('match/{id}', array('as'=>'match', 'before'=>'guest', 'uses'=>'BetCon
 Route::post('match/{id}', array('as'=>'postmatch', 'uses'=> 'BetController@postMatch')); 
 Route::get('viewmatch/{id}', array('as'=>'viewmatch', 'before'=>'guest', 'uses'=>'BetController@getViewMatch'));
 
-// Update result
+// Update Result
 Route::get('result/{id}', array('as'=>'result', 'before'=>'auth.admin', 'uses'=>'AdminController@getUpdateResult'));
 Route::post('result/{id}', array('as'=>'postresult', 'uses'=>'AdminController@postUpdateResult'));
+Route::get('updateresult/{id}', array('as'=>'updateresult', 'before'=>'auth.admin', 'uses'=>'AdminController@getReupdateResult'));
+Route::post('updateresult/{id}', array('as'=>'postupdateresult', 'uses'=>'AdminController@postReupdateResult'));

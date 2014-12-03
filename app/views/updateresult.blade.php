@@ -13,6 +13,9 @@
 
 		h3{
 			text-align: center;
+		}
+		h1{
+			text-align: center;
 		}	
 
 		p{
@@ -26,31 +29,33 @@
 <div id="page-wrapper">
 	<div class="container-fluid">
 
-		{{ Form::open(array('route'=>array('postresult', $team1[$id]->matchid), 'method'=>'post', 'class'=>'match')) }}
+		{{ Form::open(array('route'=>array('postupdateresult', $result1[$id]->matchid), 'method'=>'post', 'class'=>'match')) }}
 
 		<div class="col-lg-12" style="margin-top: 50px">			
 			<div class="col-lg-2"></div>
 			<div class="col-lg-3">
 				<p class= "click">
-					{{ HTML::image($team1[$id]->logo,'', array('id'=>$team1[$id]->teamid, 'class'=>'logo' )) }}
-					<h3> {{ $team1[$id]->name }} </h3>
-					<p> {{ Form::text('team1goal') }} </p>
+					{{ HTML::image($result1[$id]->logo,'', array('id'=>$result1[$id]->teamid, 'class'=>'logo' )) }}
+					<h3> {{ $result1[$id]->name }} </h3>
+					<h1> {{ Match::find($id)->result[0] }} </h1>
+					<p> {{ Form::text('result1goal') }} </p>
 				</p>
 			</div>
 
 			<div class="col-lg-2">
 				<p>
 					<h3>VS</h3>
-					<h3> {{ 'Tỷ lệ: '. $team1[$id]->rate }}</h3>
+					<h3> {{ 'Tỷ lệ: '. $result1[$id]->rate }}</h3>
 					<p style="margin: 50px">{{ Form::select('status', array('Closed'=>'Closed', ''=>'Opening')) }}</p>
 				</p>
 			</div>
 
 			<div class="col-lg-3">
 				<p class = "click">
-					{{ HTML::image($team2[$id]->logo,'', array('id'=>$team2[$id]->teamid, 'class'=>'logo' )) }}
-					<h3> {{ $team2[$id]->name }} </h3>
-					<p> {{ Form::text('team2goal') }} </p>
+					{{ HTML::image($result2[$id]->logo,'', array('id'=>$result2[$id]->teamid, 'class'=>'logo' )) }}
+					<h3> {{ $result2[$id]->name }} </h3>
+					<h1> {{ Match::find($id)->result[2] }} </h1>
+					<p> {{ Form::text('result2goal') }} </p>
 				</p>
 			</div>
 		</div>
@@ -62,11 +67,9 @@
 			<div class="col-lg-2">
 				<div id="login">
 					<fieldset class="clearfix">
-						@if(Match::find($id)->status == "" || Match::find($id)->status == "Closed")
-							
+
 							<p> {{ Form::submit('Submit') }} </p>
 							
-						@endif
 					</fieldset>
 				</div>
 

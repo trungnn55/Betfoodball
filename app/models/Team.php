@@ -16,6 +16,13 @@ class Team extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $table = 'teams';
 
+	public static $league = array( 'Premier League'=>'Premier League', 
+												'Champion League'=>'Champion League',
+												'La Liga'=>'La Liga',
+												'Bundesliga'=>'Bundesliga',
+												'Serie A'=>'Serie A',
+								);
+
 	public static function getTeamWin(){
 
 		return DB::table('teams')->join('matchs', 'matchs.result', '=', 'teams.id')

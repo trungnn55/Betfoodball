@@ -1,11 +1,17 @@
 @extends('layout')
 
-@extends('header')
+@include('header')
+
+@section('opening')
+    
+    <link rel="stylesheet" href="bootstrap/login/css/style.css" media="screen" type="text/css" />
+    <!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,700">  -->
+
+@stop
 
 @section('content')
 
-<div class = "col-lg-12">
-
+<div id="login" style="margin-top: 100px">
     <p style="color: red">
         @if($errors->has())
         @foreach ($errors->all() as $error ) 
@@ -17,22 +23,35 @@
     <p style="color: red">
     @if(Session::has('message'))
 
-		{{ Session::get('message')}}
+        {{ Session::get('message')}}
 
-	@endif
+    @endif
     </p>
 
-    {{ Form::open(array('route' => 'changepassword','method'=>'post')) }}
-    
-    <h5> Current password </h5>
-    {{ Form::password('currentPassword')."<br>" }}
+    <fieldset class="clearfix">
 
-    <h5> New password </h5>
-    {{ Form::password('newPassword')."<br>" }}
-	
-	<h5> Confirm password </h5>
-	{{ Form::password('confirmPassword') . "<br>" }} 
+        {{ Form::open(array('route' => 'changepassword', 'method'=>'post')) }}
 
-	<p>{{ Form::submit('  Change  ') }}</p>
+        <p>
+            <span class="fontawesome-lock"></span>
+            {{ Form::password('currentPassword', array('placeholder'=>'Current Password')) }}
+        </p>
 
-    {{ Form::close() }}
+        <p>
+            <span class="fontawesome-lock"></span>
+            {{ Form::password('newPassword', array('placeholder'=>'New Password')) }}
+        </p>
+
+        <p>
+            <span class="fontawesome-lock"></span>
+            {{ Form::password('confirmPassword', array('placeholder'=>'Confirm Password')) }}
+        </p>
+        <p>{{ Form::submit(' Change ') }}</p>
+
+        {{ Form::close() }}
+
+    </fieldset>
+
+</div>
+
+@stop

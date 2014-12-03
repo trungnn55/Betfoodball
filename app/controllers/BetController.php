@@ -44,6 +44,13 @@ class BetController extends BaseController{
 		$user = Auth::User();
 		$userbet = new BetMatch();
 		$userbetmatch = BetMatch::all();
+		// $rule = Match::$rules['chooseteam'];
+
+		// $validation = Validator::make(Input::all(), $rule);
+		
+		// if($validation->fails())
+
+			// return Redirect::route('match')->with('id',$id)->withErrors($validation);
 
 		if( Input::get( 'choosen-team' ) == "" )
 
