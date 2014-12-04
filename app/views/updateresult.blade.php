@@ -37,7 +37,7 @@
 				<p class= "click">
 					{{ HTML::image($result1[$id]->logo,'', array('id'=>$result1[$id]->teamid, 'class'=>'logo' )) }}
 					<h3> {{ $result1[$id]->name }} </h3>
-					<h1> {{ Match::find($id)->result[0] }} </h1>
+					<h1> {{ $score1 }} </h1>
 					<p> {{ Form::text('result1goal') }} </p>
 				</p>
 			</div>
@@ -54,7 +54,7 @@
 				<p class = "click">
 					{{ HTML::image($result2[$id]->logo,'', array('id'=>$result2[$id]->teamid, 'class'=>'logo' )) }}
 					<h3> {{ $result2[$id]->name }} </h3>
-					<h1> {{ Match::find($id)->result[2] }} </h1>
+					<h1> {{ $score2 }} </h1>
 					<p> {{ Form::text('result2goal') }} </p>
 				</p>
 			</div>

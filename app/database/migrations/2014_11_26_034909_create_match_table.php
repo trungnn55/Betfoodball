@@ -15,12 +15,12 @@ class CreateMatchTable extends Migration {
 		//
 		Schema::create('matchs',function(Blueprint $table){
 			$table->increments('id');
-			$table->string('team1');
+			$table->String('team1');
 			$table->String('team2');
-			$table->string('rate');
-			$table->string('league');
-			$table->string('result');
-			$table->string('status');
+			$table->String('rate');
+			$table->String('league');
+			$table->String('result');
+			$table->String('status');
 			$table->timestamps();
 		});
 	}

@@ -50,4 +50,14 @@ class Match extends Eloquent implements UserInterface, RemindableInterface {
 								->where('matchs.status', '!=', 'Closed')
 								->orderBy('matchs.id', 'desc')->limit(5)->get();
 	}
+
+	public static function getAddMatch(){
+
+		$match = new Match();
+		$match->team1 = Input::get('team1');
+		$match->team2 = Input::get('team2');
+		$match->rate = Input::get('rate');
+		$match->league = Input::get('league');
+		$match->save();
+	}
 }

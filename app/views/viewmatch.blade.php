@@ -36,7 +36,7 @@
 				<p class= "click">
 					{{ HTML::image($team1[$id]->logo,'', array('id'=>$team1[$id]->teamid, 'class'=>'logo' )) }}
 					<h3> {{ $team1[$id]->name }} </h3>
-					<h1> {{ Match::find($id)->result[0] }} </h1>
+					<h1> {{ $result1 }} </h1>
 				</p> 
 			</div>
 
@@ -50,7 +50,7 @@
 				<p class = "click">
 					{{ HTML::image($team2[$id]->logo,'', array('id'=>$team2[$id]->teamid, 'class'=>'logo' )) }}
 					<h3> {{ $team2[$id]->name }} </h3>
-					<h1> {{ Match::find($id)->result[2] }} </h1>
+					<h1> {{ $result2 }} </h1>
 				</p>
 			</div>
 		</div>
@@ -60,7 +60,7 @@
 			<div class="col-lg-3">
 				<p>
 					@foreach( $userbetteam1 as $value )
-						<p> {{ $value->betname . ": " . $value->betmoney/1000 . "K"}} </p>
+						<p> {{ $value->betname . ": " . $value->money/1000 . "K"}} </p>
 					@endforeach
 				</p>
 			</div>
@@ -69,7 +69,7 @@
 			<div class="col-lg-3">
 				<p>
 					@foreach( $userbetteam2 as $value )
-						<p> {{ $value->betname . ": " . $value->betmoney/1000 . "K"}} </p>
+						<p> {{ $value->betname . ": " . $value->money/1000 . "K"}} </p>
 					@endforeach
 				</p>
 			</div>

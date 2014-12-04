@@ -20,12 +20,7 @@ class AdminController extends BaseController{
 
 	public function postAdminAddMatch(){
 		//dd(substr(Input::get('rate'),2));
-		$match = new Match();
-		$match->team1 = Input::get('team1');
-		$match->team2 = Input::get('team2');
-		$match->rate = Input::get('rate');
-		$match->league = Input::get('league');
-		$match->save();
+		Match::getAddMatch();
 
 		return Redirect::route('admin.addmatch')->withConfirm('Added');
 	}
@@ -56,10 +51,7 @@ class AdminController extends BaseController{
 
 		}else{
 
-			$team = new Team();
-			$team->name = Input::get('name');
-			$team->logo = Input::get('logo');
-			$team->save();
+			Team::getAddTeam();
 
 			return Redirect::route('admin.addteam')->withConfirm('Added');
 		}		
@@ -97,28 +89,36 @@ class AdminController extends BaseController{
 	public function postUpdateResult($id){
 
 		$user = Auth::User();
-		$match = new Match();
-		$betmatch = Match::all();
-		$temp = $match::find($id);
+		$match = Match::find($id);
 
+		// dd(BetMatch::getBetName());
+		// dd(BetMatch::getTotalBetMoney());
 		if(Input::get('team1goal') == '' || Input::get('team2goal') == ''){
-			$temp->status = Input::get('status');
-			$temp->save();
+			$match->status = Input::get('status');
+			$match->save();
+			$matchid = BetMatch::getBetMatchId($id)[0]->id;
+			BetMatch::find($matchid)->money = '';
+			BetMatch::find($matchid)->save();
 			return Redirect::route('index');
 		}
 
 
 
-		$temp->result = Input::get('team1goal') . ':' . Input::get('team2goal');
+		$match->result = Input::get('team1goal') . ':' . Input::get('team2goal');
 
-		if(($match::find($id)->rate[0] + Input::get('team1goal')) > ($match::find($id)->rate[2] + Input::get('team2goal')))
-			$temp->status = $match::find($id)->team1;
-		else if(($match::find($id)->rate[0] + Input::get('team1goal')) < ($match::find($id)->rate[2] + Input::get('team2goal')))
-			$temp->status = $match::find($id)->team2;
-		else
-			$temp->status = "Hoà";
-		$temp->save();
+		$key = strpos($match->rate,':');
+		$rate1 = substr($match->rate, 0, $key);
+		$rate2 = substr($match->rate, $key+1);
+		$match->result = Input::get('team1goal') . ':' . Input::get('team2goal');
+		$score1 = $rate1 + Input::get('team1goal');
+		$score2 = $rate2 + Input::get('team2goal');	
+		$match->status = (String)($score1 - $score2);
+		
+		$match->save();
 
+		BetMatch::getUpdateMoney($id, $score1, $score2);
+		Account::getReturnMoney();
+				
 		return Redirect::route('index');
 	}
 
@@ -144,32 +144,38 @@ class AdminController extends BaseController{
 			$result2[$value->matchid] = $value; 
 		}
 
-		return View::make('updateresult')->with(array('result1'=>$result1, 'result2'=>$result2, 'id'=>$id));
+		$key = strpos(Match::find($id)->result,':');
+		$score1 = substr(Match::find($id)->result, 0, $key);
+		$score2 = substr(Match::find($id)->result, $key+1);
+
+		return View::make('updateresult')->with(array(  'result1'=>$result1, 'result2'=>$result2, 'id'=>$id,
+														'score1'=>$score1, 'score2'=>$score2 ));
 	}
 
 	public function postReUpdateResult($id){
 
 		$user = Auth::User();
-		$match = new Match();
-		$betmatch = Match::all();
-		$temp = $match::find($id);
+		$match = Match::find($id);
 
 		if(Input::get('result1goal') == '' || Input::get('result2goal') == ''){
-			$temp->status = Input::get('status');
-			$temp->result = '';
-			$temp->save();
+			$match->status = Input::get('status');
+			$match->result = '';
+			$match->save();
 			return Redirect::route('index');
 		}
 
-		$temp->result = Input::get('result1goal') . ':' . Input::get('result2goal');
+		$key = strpos($match->rate,':');
+		$rate1 = substr($match->rate, 0, $key);
+		$rate2 = substr($match->rate, $key+1);
+		$match->result = Input::get('result1goal') . ':' . Input::get('result2goal');
+		$score1 = $rate1 + Input::get('result1goal');
+		$score2 = $rate2 + Input::get('result2goal');	
+		$match->status = (String)($score1 - $score2);
+		
+		$match->save();
 
-		if(($match::find($id)->rate[0] + Input::get('result1goal')) > ($match::find($id)->rate[2] + Input::get('result2goal')))
-			$temp->status = $match::find($id)->team1;
-		else if(($match::find($id)->rate[0] + Input::get('result1goal')) < ($match::find($id)->rate[2] + Input::get('result2goal')))
-			$temp->status = $match::find($id)->team2;
-		else
-			$temp->status = "Hoà";
-		$temp->save();
+		BetMatch::getUpdateMoney($id, $score1, $score2);
+		Account::getReturnMoney($id);
 
 		return Redirect::route('index');
 	} 

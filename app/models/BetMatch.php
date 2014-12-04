@@ -29,19 +29,101 @@ class BetMatch extends Eloquent implements UserInterface, RemindableInterface {
 										->select( 'userbetmatch.id' )->get();
 	}
 
-	public static function getShowUserBetMatch($matchid, $teamid){
+	public static function getShowUserBetMatch($matchid, $teamname){
 
 		return DB::table('userbetmatch')->where( 'idmatch', '=', $matchid )
-										->where( 'teampick', '=', $teamid )
-										->select( 'betname', 'betmoney')
+										->where( 'teampick', '=', $teamname )
+										->select( 'betname', 'betmoney', 'money')
 										->get();
 	}
 	
-	public static function getTotalWinBet(){
+	public static function getBetMatchId($id){
 
-		return DB::table('userbetmatch')->join('matchs', 'matchs.result', '=', 'userbetmatch.teampick')
-										->where('matchs.id', '=', 'userbetmatch.idmatch')
+		return DB::table('userbetmatch')->where('idmatch', '=', $id)
+										->select('id')
 										->get();
-
 	}
+
+	public static function getUpdateMoney($id, $score1, $score2){
+
+		// Update Money
+		$returnMoney = new BetMatch();
+		$money = (String)($score1 - $score2);
+
+		if($money > 0.25)
+			foreach( $returnMoney::getBetMatchId($id) as $value ){
+				$betmatch = BetMatch::find($value->id);
+				if($betmatch->teampick == Match::find($id)->team1 )
+
+					$betmatch->money = $betmatch->betmoney;
+				
+				else 
+
+					$betmatch->money = -$betmatch->betmoney;
+				$betmatch->save();
+			}
+
+		else if($money == 0.25)
+			foreach( $returnMoney::getBetMatchId($id) as $value ){
+				$betmatch = BetMatch::find($value->id);
+				if($betmatch->teampick == Match::find($id)->team1 )
+
+					$betmatch->money = $betmatch->betmoney/2;
+				
+				else 
+
+					$betmatch->money = -$betmatch->betmoney/2;
+				$betmatch->save();
+			}
+
+		else if ($money == 0)
+			foreach( $returnMoney::getBetMatchId($id) as $value ){
+				$betmatch = BetMatch::find($value->id);
+					$betmatch->money = 0;
+				$betmatch->save();
+			}
+		else if($money == -0.25)
+			foreach( $returnMoney::getBetMatchId($id) as $value ){
+				$betmatch = BetMatch::find($value->id);
+				if($betmatch->teampick == Match::find($id)->team1 )
+
+					$betmatch->money = -$betmatch->betmoney/2;
+				
+				else 
+
+					$betmatch->money = $betmatch->betmoney/2;
+				$betmatch->save();
+			}
+		else
+			foreach( $returnMoney::getBetMatchId($id) as $value ){
+				$betmatch = BetMatch::find($value->id);
+				if($betmatch->teampick == Match::find($id)->team1 )
+
+					$betmatch->money = -$betmatch->betmoney;
+				
+				else 
+
+					$betmatch->money = $betmatch->betmoney;
+				$betmatch->save();
+			}
+	}
+
+	public static function getBetName(){
+
+		return DB::table('userbetmatch')->join('users', 'users.name', '=', 'userbetmatch.betname')
+										->select('userbetmatch.betname', 'users.id')
+										->groupBy('betname')
+										->orderBy('users.id')->get();
+	}
+
+	public static function getTotalBetMoney(){
+
+		$betName =  BetMatch::getBetName();
+		foreach($betName as $value)
+
+			$totalBetMoney[$value->id] = DB::table('userbetmatch')->where('betname', '=', $value->betname)->sum('money');
+
+			return $totalBetMoney;
+	}
+
 }

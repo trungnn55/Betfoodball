@@ -44,7 +44,7 @@
 								<h3>{{ link_to_route('match',$team1[$i]->league, $team1[$i]->matchid) }}</h3>
 
 								<p>
-								@if(Auth::user()->id == 1)
+								@if(Auth::user()->manager == 1)
 
 									{{ link_to_route('result','Update Result', $team1[$i]->matchid) }}
 
@@ -64,7 +64,7 @@
 								<td>
 										<h3> {{ $result1[$i]->league }} </h3>
 										<p>{{ link_to_route('viewmatch','View Match', $result1[$i]->matchid) }}</p>
-										@if(Auth::user()->id == 1)
+										@if(Auth::user()->manager == 1)
 
 											<p>{{ link_to_route('updateresult', 'ReUpdate Result', $result1[$i]->matchid)}}</p>
 										@endif

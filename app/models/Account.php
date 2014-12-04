@@ -38,6 +38,12 @@ class Account extends Eloquent implements UserInterface, RemindableInterface {
 			),
 	);
 
+	public static function getTopMoney(){
+
+		return DB::table('users')->select('money', 'name')
+								->orderBy('money', 'desc')->get();	
+	}
+
 	public static function getUserBet(){
 
 		return DB::table('users')->join('userbetmatch' );
@@ -52,4 +58,32 @@ class Account extends Eloquent implements UserInterface, RemindableInterface {
 		$this->attributes['password'] = Hash::make($input) ;
 	}
 
+	public static function getRegister(){
+
+			$user = new Account();
+			$user->username = Input::get( 'username' );
+			$user->password = Input::get( 'password' );
+			$user->name = Input::get( 'name' );
+	        $user->save();
+	}
+
+	public static function getBetMoney(){
+
+		return DB::table('users')->join('userbetmatch', 'users.name', '=', 'userbetmatch.betname')
+								->select('userbetmatch.money as money', 'users.id as userid')
+								->get();
+	}
+
+	public static function getReturnMoney(){
+
+		$totalBetMoney = BetMatch::getTotalBetMoney();
+		$betname = BetMatch::getBetName();
+		
+		foreach($betname as $value){
+
+			$savemoney = Account::find($value->id);
+			$savemoney->money = $totalBetMoney[$value->id];
+			$savemoney->save();
+		}
+	}
 }

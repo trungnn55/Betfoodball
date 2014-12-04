@@ -17,7 +17,7 @@ class CreateUserBetMatchTable extends Migration {
 			$table->increments('id');
 			$table->integer('idmatch');
 			$table->String('betname');
-			$table->integer('teampick');
+			$table->String('teampick');
 			$table->integer('betmoney');
 			$table->integer('money');
 			$table->timestamps();

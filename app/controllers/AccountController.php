@@ -79,11 +79,7 @@ class AccountController extends BaseController{
 
 		} else {
 
-			$user = new Account();
-			$user->username = Input::get( 'username' );
-			$user->password = Input::get( 'password' );
-			$user->name = Input::get( 'name' );
-	        $user->save();	
+			Account::getRegister();	
 	        
 	        return Redirect::route( 'login' )->withNotification( 'Register successfull' );
         }

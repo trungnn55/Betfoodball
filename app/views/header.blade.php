@@ -11,14 +11,14 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="http://localhost:8888/laravel/betfootball/public/index">Home</a>
+            <a class="navbar-brand" href="http://localhost:8888/laravel/betfootball/public/topmoney">Top Đại Gia</a>
             <!-- <a class="navbar-brand" href="http://localhost:8888/laravel/betfootball/public/bethistory">Bet History</a> -->
             <!-- <a class="navbar-brand" href="http://localhost:8888/laravel/betfootball/public/changepassword">Change Password</a> -->
         </div>
 
         <ul class="nav navbar-right top-nav">
-            <li class="dropdown">
-                {{ HTML::linkRoute('logout', 'Logout') }}
-            </li>
+            <a class="navbar-brand" href="http://localhost:8888/laravel/betfootball/public/changepassword">Change Password</a>
+            <a class="navbar-brand" href="http://localhost:8888/laravel/betfootball/public/logout">Logout</a>
         </ul>
        <!--  <ul class="nav navbar-right top-nav">
             <li class="dropdown">

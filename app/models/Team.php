@@ -29,6 +29,14 @@ class Team extends Eloquent implements UserInterface, RemindableInterface {
 								->select('teams.name');
 	}
 
+	public static function getAddTeam(){
+
+		$team = new Team();
+		$team->name = Input::get('name');
+		$team->logo = Input::get('logo');
+		$team->save();
+	}
+
 	/**~
 	 * The attributes excluded from the model's JSON form.
 	 *

@@ -47,3 +47,6 @@ Route::get('result/{id}', array('as'=>'result', 'before'=>'auth.admin', 'uses'=>
 Route::post('result/{id}', array('as'=>'postresult', 'uses'=>'AdminController@postUpdateResult'));
 Route::get('updateresult/{id}', array('as'=>'updateresult', 'before'=>'auth.admin', 'uses'=>'AdminController@getReupdateResult'));
 Route::post('updateresult/{id}', array('as'=>'postupdateresult', 'uses'=>'AdminController@postReupdateResult'));
+
+// Top money
+Route::get('topmoney', array('as'=>'topmoney', 'before'=>'guest', 'uses'=>'BetController@getTopMoney'));

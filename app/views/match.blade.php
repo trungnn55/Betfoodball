@@ -54,7 +54,7 @@
 			<div class="col-lg-2"></div>
 			<div class="col-lg-3">
 				<p class= "click">
-					{{ HTML::image($team1[$id]->logo,'', array( 'id'=>$team1[$id]->teamid, 'class'=>'logo', )) }}
+					{{ HTML::image($team1[$id]->logo,'', array( 'id'=>$team1[$id]->name, 'class'=>'logo', )) }}
 					<h3> {{ $team1[$id]->name }} </h3>
 				</p>
 			</div>
@@ -74,7 +74,7 @@
 			<div class="col-lg-3">
 				<p class = "click">
 
-					{{ HTML::image($team2[$id]->logo,'', array('id'=>$team2[$id]->teamid, 'class'=>'logo' )) }}
+					{{ HTML::image($team2[$id]->logo,'', array('id'=>$team2[$id]->name, 'class'=>'logo' )) }}
 
 					<h3> {{ $team2[$id]->name }} </h3>
 				</p>

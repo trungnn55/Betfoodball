@@ -32,8 +32,8 @@ class BetController extends BaseController{
 		}
 
 		$userbet = new BetMatch();
-		$userbetteam1 = $userbet::getShowUserBetMatch($id, $team1[$id]->teamid);
-		$userbetteam2 = $userbet::getShowUserBetMatch($id, $team2[$id]->teamid);
+		$userbetteam1 = $userbet::getShowUserBetMatch($id, $team1[$id]->name);
+		$userbetteam2 = $userbet::getShowUserBetMatch($id, $team2[$id]->name);
 
 		return View::make('match')->with( array( 'team1'=>$team1,'team2'=>$team2, 'id'=> $id, 'userbetteam1'=>$userbetteam1, 'userbetteam2'=>$userbetteam2 ));
 	}
@@ -44,13 +44,6 @@ class BetController extends BaseController{
 		$user = Auth::User();
 		$userbet = new BetMatch();
 		$userbetmatch = BetMatch::all();
-		// $rule = Match::$rules['chooseteam'];
-
-		// $validation = Validator::make(Input::all(), $rule);
-		
-		// if($validation->fails())
-
-			// return Redirect::route('match')->with('id',$id)->withErrors($validation);
 
 		if( Input::get( 'choosen-team' ) == "" )
 
@@ -59,7 +52,7 @@ class BetController extends BaseController{
 		foreach($userbetmatch as $value){
 
 			if( $value->idmatch == $id && $value->betname == $user->name){
-
+				// dd(Input::get('choosen-team'));
 				$temp = $userbet::find($value->id);
 				$temp->teampick = Input::get('choosen-team');
 				$temp->betmoney = Input::get('betmoney');
@@ -95,9 +88,24 @@ class BetController extends BaseController{
 		}
 
 		$userbet = new BetMatch();
-		$userbetteam1 = $userbet::getShowUserBetMatch($id, $team1[$id]->teamid);
-		$userbetteam2 = $userbet::getShowUserBetMatch($id, $team2[$id]->teamid);
+		$userbetteam1 = $userbet::getShowUserBetMatch($id, $team1[$id]->name);
+		$userbetteam2 = $userbet::getShowUserBetMatch($id, $team2[$id]->name);
 
-		return View::make('viewmatch')->with( array( 'team1'=>$team1,'team2'=>$team2, 'id'=> $id, 'userbetteam1'=>$userbetteam1, 'userbetteam2'=>$userbetteam2  ) ); 
+		$key = strpos(Match::find($id)->result,':');
+		$result1 = substr(Match::find($id)->result, 0, $key);
+		$result2 = substr(Match::find($id)->result, $key+1);
+
+		return View::make('viewmatch')->with( array( 'team1'=>$team1,'team2'=>$team2, 'userbetteam1'=>$userbetteam1, 'userbetteam2'=>$userbetteam2,  
+													 'id'=> $id, 'result1'=>$result1, 'result2'=>$result2 ) ); 
 	}
+
+	// Top money
+	public function getTopMoney(){
+
+		$topMoney = Account::getTopMoney();
+
+		return View::make('topmoney')->with(array('topMoney'=>$topMoney));
+	}
+
+
 }
