@@ -19,7 +19,6 @@ class AdminController extends BaseController{
 	}
 
 	public function postAdminAddMatch(){
-		//dd(substr(Input::get('rate'),2));
 		Match::getAddMatch();
 
 		return Redirect::route('admin.addmatch')->withConfirm('Added');
@@ -90,9 +89,11 @@ class AdminController extends BaseController{
 
 		$user = Auth::User();
 		$match = Match::find($id);
+		$rule = Match::$rules['score'];
+		$validation = Validator::make(Input::all(), $rule);
+		if($validation->fails())
+			return Redirect::route('result', $id)->withErrors($validation);
 
-		// dd(BetMatch::getBetName());
-		// dd(BetMatch::getTotalBetMoney());
 		if(Input::get('team1goal') == '' || Input::get('team2goal') == ''){
 			$match->status = Input::get('status');
 			$match->save();
@@ -156,6 +157,10 @@ class AdminController extends BaseController{
 
 		$user = Auth::User();
 		$match = Match::find($id);
+		$rule = Match::$rules['updatescore'];
+		$validation = Validator::make(Input::all(), $rule);
+		if($validation->fails())
+			return Redirect::route('updateresult', $id)->withErrors($validation);
 
 		if(Input::get('result1goal') == '' || Input::get('result2goal') == ''){
 			$match->status = Input::get('status');
@@ -179,4 +184,11 @@ class AdminController extends BaseController{
 
 		return Redirect::route('index');
 	} 
+
+	public function getDeleteMatch($id){
+
+		Match::destroy($id);
+
+		return Redirect::route('index');
+	}
 }

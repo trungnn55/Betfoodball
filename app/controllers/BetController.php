@@ -47,7 +47,7 @@ class BetController extends BaseController{
 
 		if( Input::get( 'choosen-team' ) == "" )
 
-			return Redirect::route('match',$id);
+			return Redirect::route('match',$id)->with('notification', 'Click vao Logo de chon doi muon dat cuoc');
 
 		foreach($userbetmatch as $value){
 
@@ -107,5 +107,13 @@ class BetController extends BaseController{
 		return View::make('topmoney')->with(array('topMoney'=>$topMoney));
 	}
 
+	public function getBetHistory(){
 
+		$user = Auth::user()->name; 
+		$bethistory = BetMatch::getBetMatch($user);
+		$topMoney = Account::getTopMoney();
+		// dd($bethistory);
+
+		return View::make('bethistory')->with('bethistory', $bethistory)->with('topmoney', $topMoney);
+	}
 }

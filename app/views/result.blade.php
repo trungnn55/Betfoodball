@@ -25,6 +25,13 @@
 @section('content')
 <div id="page-wrapper">
 	<div class="container-fluid">
+	<p style="color: red; font-size: 2em">
+		@if($errors->has())
+		@foreach($errors->all() as $value)
+			{{ $value }}
+		@endforeach
+		@endif
+	</p>
 
 		{{ Form::open(array('route'=>array('postresult', $team1[$id]->matchid), 'method'=>'post', 'class'=>'match')) }}
 
@@ -43,6 +50,7 @@
 					<h3>VS</h3>
 					<h3> {{ 'Tỷ lệ: '. $team1[$id]->rate }}</h3>
 					<p style="margin: 50px">{{ Form::select('status', array('Closed'=>'Closed', ''=>'Opening')) }}</p>
+					<p>{{ link_to_route('deletematch','Delete Match', $id) }}</p>
 				</p>
 			</div>
 

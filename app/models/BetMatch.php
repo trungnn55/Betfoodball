@@ -108,6 +108,7 @@ class BetMatch extends Eloquent implements UserInterface, RemindableInterface {
 			}
 	}
 
+// Get Money Bet
 	public static function getBetName(){
 
 		return DB::table('userbetmatch')->join('users', 'users.name', '=', 'userbetmatch.betname')
@@ -124,6 +125,16 @@ class BetMatch extends Eloquent implements UserInterface, RemindableInterface {
 			$totalBetMoney[$value->id] = DB::table('userbetmatch')->where('betname', '=', $value->betname)->sum('money');
 
 			return $totalBetMoney;
+	}
+
+
+// Bet History
+	public static function getBetMatch($user){
+
+		return DB::table('userbetmatch')->join('matchs', 'userbetmatch.idmatch', '=', 'matchs.id')
+										->select('userbetmatch.betname', 'matchs.team1', 'matchs.team2', 'matchs.status', 'money', 'teampick')
+										->where('betname', '=', $user)
+										->get();
 	}
 
 }

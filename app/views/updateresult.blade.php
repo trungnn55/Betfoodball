@@ -28,6 +28,13 @@
 @section('content')
 <div id="page-wrapper">
 	<div class="container-fluid">
+		<p style="color: red; font-size: 2em">
+			@if($errors->has())
+			@foreach($errors->all() as $value)
+				{{ $value }}
+			@endforeach
+			@endif
+		</p>
 
 		{{ Form::open(array('route'=>array('postupdateresult', $result1[$id]->matchid), 'method'=>'post', 'class'=>'match')) }}
 

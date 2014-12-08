@@ -50,7 +50,10 @@
 
 		{{ Form::open(array('route'=>array('postmatch', $team1[$id]->matchid), 'method'=>'post', 'class'=>'match')) }}
 
-		<div class="col-lg-12" style="margin-top: 50px">			
+		<div class="col-lg-12" style="margin-top: 50px">
+			@if(Session::has('notification'))
+				<p><h2 style="color: red; text-align: center">{{ Session::get('notification') }}</h2></p>
+			@endif	
 			<div class="col-lg-2"></div>
 			<div class="col-lg-3">
 				<p class= "click">
@@ -62,7 +65,7 @@
 			<div class="col-lg-2">
 				<p>
 					<h3 style="margin-top: 70px">{{ $team1[$id]->league }}</h3>
-					<h3> {{ 'Tỷ : '. $team1[$id]->rate }}</h3>
+					<h3> {{ 'Tỷ lệ: '. $team1[$id]->rate }}</h3>
 					@if(Match::find($id)->status == "")
 
 						<h3>{{ Form::select('betmoney', array('100000'=>'100K','200000'=>'200K','300000'=>'300K','400000'=>'400K','500000'=>'500K')) }}</h3>

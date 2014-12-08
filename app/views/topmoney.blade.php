@@ -34,8 +34,9 @@
 	<div class="container-fluid">
 		<div class="col-lg-12">
 			
-			<div class="col-lg-2"></div>
-			<div class="col-lg-8">
+			<div class="col-lg-3"></div>
+			<div class="col-lg-6">
+			<h2 style="text-align:center; margin-bottom: 100px; color: red"> Top tay chơi</h2>
 				<div class="table-responsive">
 					<table class="table table-bordered table-hover table-striped">
 						<tr>
@@ -45,7 +46,7 @@
 						@for($i = 0; $i < count($topMoney); $i++)
 							<tr>
 								<td>{{ $topMoney[$i]->name }}</td>
-								<td>{{ $topMoney[$i]->money }}</td>
+								<td>{{ $topMoney[$i]->money . " VND" }}</td>
 							</tr>
 						@endfor		
 				

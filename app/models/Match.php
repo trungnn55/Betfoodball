@@ -31,6 +31,14 @@ class Match extends Eloquent implements UserInterface, RemindableInterface {
 		'chooseteam' => array(
 			'choose-team'=>'required', 
 		),
+		'score' => array(
+			'team1goal' => 'numeric',
+			'team2goal' => 'numeric',
+		),
+		'updatescore' =>array(
+			'result1goal' => 'numeric',
+			'result2goal' => 'numeric',
+		),
 	); 
 
 	public static function getMatchesTeam($value){

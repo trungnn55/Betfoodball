@@ -1,5 +1,12 @@
 <html>
-
+<head>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $(":file").css("background-color","red");
+});
+</script>
+</head>
 <body>
 
 @if( Session::has('confirm') )
@@ -12,11 +19,12 @@
     @endforeach
 @endif
 
-{{ Form::open(array('route' => 'admin.addteam','method'=>'post')) }}
+{{ Form::open(array('route' => 'admin.addteam','method'=>'post','files'=>true)) }}
 <table>	
 
 	<p>Team: {{ Form::text('name') }}</p>
-	<p>Link :  {{ Form::text('logo') }}</p>
+	<!-- <p>Link :  {{ Form::text('logo') }}</p> -->
+	Logo: <input type="file" name="logo">
 	<p>{{ Form::submit('ADD') }}</p>
 
 	<p> {{ HTML::linkRoute('admin.addmatch', 'Add Match') }} </p>

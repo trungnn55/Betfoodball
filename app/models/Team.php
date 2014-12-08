@@ -32,9 +32,17 @@ class Team extends Eloquent implements UserInterface, RemindableInterface {
 	public static function getAddTeam(){
 
 		$team = new Team();
+
 		$team->name = Input::get('name');
-		$team->logo = Input::get('logo');
-		$team->save();
+		$img = Input::file('logo');
+		$path = public_path().'/image';
+		$fileName =$img->getClientOriginalName();
+		if($img->move($path, $fileName)){
+			$team->logo = 'image/' . $fileName;
+			$team->save();
+
+		};
+		
 	}
 
 	/**~

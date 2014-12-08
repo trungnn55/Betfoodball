@@ -50,3 +50,9 @@ Route::post('updateresult/{id}', array('as'=>'postupdateresult', 'uses'=>'AdminC
 
 // Top money
 Route::get('topmoney', array('as'=>'topmoney', 'before'=>'guest', 'uses'=>'BetController@getTopMoney'));
+
+// Delete Match
+Route::get('deletematch/{id}', array('as'=>'deletematch', 'before'=>'auth.admin', 'uses'=>'AdminController@getDeleteMatch'));
+
+// Bet History
+Route::get('bethistory', array('as'=>'bethistory', 'before'=>'guest', 'uses'=>'BetController@getBetHistory'));	
