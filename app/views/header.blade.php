@@ -10,12 +10,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
- -->                <a class="navbar-brand" href="http://localhost:8888/laravel/betfootball/public/index">Home</a>
+ -->                <a class="navbar-brand" href="{{ action('BetController@getIndex') }}">Home</a>
                 @if(Auth::user()->manager != 1)
-                <a class="navbar-brand" href="http://localhost:8888/laravel/betfootball/public/topmoney">Top</a>
+                <a class="navbar-brand" href="{{ action('BetController@getTopMoney') }}">Top</a>
                 @else
-                    <a class="navbar-brand" href="http://localhost:8888/laravel/betfootball/public/admin/addmatch">Add Match</a>
-                    <a class="navbar-brand" href="http://localhost:8888/laravel/betfootball/public/admin/addteam">Add Team</a>
+                    <a class="navbar-brand" href="{{ action('AdminController@getAdminAddMatch') }}">Add Match</a>
+                    <a class="navbar-brand" href="{{ action('AdminController@getAdminAddTeam') }}">Add Team</a>
                 @endif
             </div>
             <!-- Top Menu Items -->
@@ -26,20 +26,20 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{Auth::user()->name}}<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="http://localhost:8888/laravel/betfootball/public/bethistory"><i class="fa fa-fw fa-gear"></i> History</a>
+                            <a href="{{ action('BetController@getBetHistory') }}"><i class="fa fa-fw fa-gear"></i> History</a>
                         </li>
                         <li>
-                            <a href="http://localhost:8888/laravel/betfootball/public/changepassword"><i class="fa fa-fw fa-user"></i> Password</a>
+                            <a href="{{ action('AccountController@getChangePassword') }}"><i class="fa fa-fw fa-user"></i> Password</a>
                         </li>
                        
                         <li class="divider"></li>
                         <li>
-                            <a href="http://localhost:8888/laravel/betfootball/public/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="{{ action('AccountController@getLogout') }}"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>   
             </ul>
-            <h2 style="color: red; margin-left: 180px"> NADIA BET FOODBALL</h2>
+            <h2 style="color: red; margin-left: 180px"> NADIA FOOTBALL BET</h2>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
           
             <!-- /.navbar-collapse -->

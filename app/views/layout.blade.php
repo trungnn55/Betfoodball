@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>BET</title>
+    <title>NDV Football Bet</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{{ url('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
