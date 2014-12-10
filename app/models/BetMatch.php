@@ -137,7 +137,7 @@ class BetMatch extends Eloquent implements UserInterface, RemindableInterface {
 		return DB::table('userbetmatch')->join('matchs', 'userbetmatch.idmatch', '=', 'matchs.id')
 										->select('userbetmatch.betname', 'matchs.team1', 'matchs.team2', 'matchs.status', 'money', 'teampick', 'matchs.result', 'matchs.id')
 										->where('betname', '=', $user)
-										->orderBy('Matchs.Created_at', 'asc')
+										->orderBy('Matchs.created_at', 'asc')
 										->get();
 	}
 
