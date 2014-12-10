@@ -68,4 +68,12 @@ class Match extends Eloquent implements UserInterface, RemindableInterface {
 		$match->league = Input::get('league');
 		$match->save();
 	}
+
+	public static function getRate($string, $value){
+
+		$key = strpos($string, $value);
+		$rate1 = substr($string, 0, $key);
+		$rate2 = substr($string, $key+1);
+		return $rate1/$rate2;
+	}
 }

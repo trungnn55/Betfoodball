@@ -19,6 +19,7 @@ class AdminController extends BaseController{
 	}
 
 	public function postAdminAddMatch(){
+		
 		Match::getAddMatch();
 
 		return Redirect::route('admin.addmatch')->withConfirm('Added');
@@ -119,7 +120,15 @@ class AdminController extends BaseController{
 		$rate2 = substr($match->rate, $key+1);
 		$match->result = Input::get('team1goal') . ':' . Input::get('team2goal');
 		$score1 = $rate1 + Input::get('team1goal');
-		$score2 = $rate2 + Input::get('team2goal');
+		$score2 = $rate2 + (float)Input::get('team2goal');
+
+		if(strstr($rate1, '/'))
+
+			$score1 = Match::getRate($rate1, '/') + Input::get('team1goal');
+
+		elseif(strstr($rate2, '/'))
+			$score2 = Match::getRate($rate2, '/') + Input::get('team2goal');
+
 		$match->status = (String)($score1 - $score2);
 		
 		$match->save();
