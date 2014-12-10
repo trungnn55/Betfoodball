@@ -27,10 +27,7 @@
 
 
 <div id="page-wrapper">
-	@if(Auth::User()->manager == 1)
-		{{ link_to_route('admin.addteam', 'Add Team') . "<br>"}}
-		{{ link_to_route('admin.addmatch', 'Add Match') }}
-	@endif
+	
 	<div class="container-fluid">
 		<div class="col-lg-12">
 			
@@ -46,30 +43,67 @@
 						</tr>
 						@for($i = 0; $i < count($bethistory); $i++)
 							<tr>
+								<?php $id = (integer)$bethistory[$i]->id; 
+								 ?>
 								@if($bethistory[$i]->teampick == $bethistory[$i]->team1)
-									<td>
-										<b>{{ $bethistory[$i]->team1 }}</b> <i>vs</i>  {{ $bethistory[$i]->team2 }}
-									</td>
-								@else
-									<td>{{ $bethistory[$i]->team1 }} <i>vs</i>  <b>{{ $bethistory[$i]->team2 }}</b>	</td>
-								@endif
-								@if($bethistory[$i]->status > 0)
-									<td style="color: green"> Thắng </td>
-									<td>{{ $bethistory[$i]->money . " VND" }}</td>
-								
-								@elseif($bethistory[$i]->status == '')
-									<td style="color: grey"> Đang chờ... </td>
-									<td style="color: grey"> Đang chờ... </td>
-								
-								@elseif($bethistory[$i]->status == 0)
-									<td> Hoà </td>
-									<td> 0 VND</td>
-								
-								@else
-									<td style="color: red"> Thua </td>
-									<td>{{ $bethistory[$i]->money . " VND" }}</td>
-								@endif
+									
+									@if($bethistory[$i]->status > 0)
+										<td> {{ link_to_route('viewmatch', $bethistory[$i]->team1 . ' vs ' . $bethistory[$i]->team2, $id, array('class'=>'list-group-item')) }} </td>
+										<td style="color: rgb(28, 200, 28)"> {{$bethistory[$i]->result}} </td>
+										<td style="color: rgb(28, 200, 28)">{{ $bethistory[$i]->money . " VND" }}</td>
 
+									@elseif($bethistory[$i]->status == 'Closed')
+										<td> {{ link_to_route('match', $bethistory[$i]->team1 . ' vs ' . $bethistory[$i]->team2, $id, array('class'=>'list-group-item')) }} </td>
+										<td style="color: grey"> {{$bethistory[$i]->result}} </td>
+										<td style="color: grey"> Đang chờ... </td>
+									
+									@elseif($bethistory[$i]->status == 0 && $bethistory[$i]->status != '')
+										<td> {{ link_to_route('viewmatch', $bethistory[$i]->team1 . ' vs ' . $bethistory[$i]->team2, $id, array('class'=>'list-group-item')) }} </td>
+										<td> {{ $bethistory[$i]->result }} </td>
+										<td> {{ $bethistory[$i]->money . " VND" }}</td>
+									
+									@elseif($bethistory[$i]->status < 0)
+										<td> {{ link_to_route('viewmatch', $bethistory[$i]->team1 . ' vs ' . $bethistory[$i]->team2, $id, array('class'=>'list-group-item')) }} </td>
+										<td style="color: red"> {{$bethistory[$i]->result}} </td>
+										<td style="color: red">{{ $bethistory[$i]->money . " VND" }}</td>
+
+									
+									
+									@else
+										<td> {{ link_to_route('match', $bethistory[$i]->team1 . ' vs ' . $bethistory[$i]->team2, $id, array('class'=>'list-group-item')) }} </td>
+										<td style="color: grey"> Đang chờ... </td>
+										<td style="color: grey"> Đang chờ... </td>
+									@endif
+								
+
+								@else
+
+									@if($bethistory[$i]->status > 0)
+										<td> {{ link_to_route('viewmatch', $bethistory[$i]->team1 . ' vs ' . $bethistory[$i]->team2, $id, array('class'=>'list-group-item')) }} </td>
+										<td style="color: red"> {{$bethistory[$i]->result}} </td>
+										<td style="color: red">{{ $bethistory[$i]->money . " VND" }}</td>
+
+									@elseif($bethistory[$i]->status == 'Closed')
+										<td> {{ link_to_route('match', $bethistory[$i]->team1 . ' vs ' . $bethistory[$i]->team2, $id, array('class'=>'list-group-item')) }} </td>
+										<td style="color: grey"> {{$bethistory[$i]->result}} </td>
+										<td style="color: grey"> Đang chờ... </td>
+									
+									@elseif($bethistory[$i]->status == 0 && $bethistory[$i]->status != '')
+										<td> {{ link_to_route('viewmatch', $bethistory[$i]->team1 . ' vs ' . $bethistory[$i]->team2, $id, array('class'=>'list-group-item')) }} </td>
+										<td> {{ $bethistory[$i]->result }} </td>
+										<td> {{ $bethistory[$id]->money . ' VND' }}</td>
+									
+									@elseif($bethistory[$i]->status < 0)
+										<td> {{ link_to_route('viewmatch', $bethistory[$i]->team1 . ' vs ' . $bethistory[$i]->team2, $id, array('class'=>'list-group-item')) }} </td>
+										<td style="color: rgb(28, 200, 28)"> {{$bethistory[$i]->result}} </td>
+										<td style="color: rgb(28, 200, 28)">{{ $bethistory[$i]->money . " VND" }}</td>
+
+									@else
+										<td> {{ link_to_route('match', $bethistory[$i]->team1 . ' vs ' . $bethistory[$i]->team2, $id, array('class'=>'list-group-item')) }} </td>
+										<td style="color: grey"> Đang chờ... </td>
+										<td style="color: grey"> Đang chờ... </td>
+									@endif
+								@endif
 							</tr>
 						@endfor		
 				

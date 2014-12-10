@@ -50,7 +50,7 @@
 		@endif
 	</p>
 
-		{{ Form::open(array('route'=>array('postresult', $team1[$id]->matchid), 'method'=>'post', 'class'=>'match')) }}
+		{{ Form::open(array('route'=>array('postupdatescore', $team1[$id]->matchid), 'method'=>'post', 'class'=>'match')) }}
 
 		<div class="col-lg-12" style="margin-top: 50px">			
 			<div class="col-lg-2"></div>

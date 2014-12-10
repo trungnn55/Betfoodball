@@ -16,11 +16,11 @@ class Team extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $table = 'teams';
 
-	public static $league = array( 'Premier League'=>'Premier League', 
-												'Champion League'=>'Champion League',
-												'La Liga'=>'La Liga',
-												'Bundesliga'=>'Bundesliga',
-												'Serie A'=>'Serie A',
+	public static $league = array(  'Premier League'=>'Premier League', 
+									'Champion League'=>'Champion League',
+									'La Liga'=>'La Liga',
+									'Bundesliga'=>'Bundesliga',
+									'Serie A'=>'Serie A',
 								);
 
 	public static function getTeamWin(){
@@ -42,8 +42,15 @@ class Team extends Eloquent implements UserInterface, RemindableInterface {
 			$team->save();
 
 		};
-		
 	}
+
+	public static function getTeam(){
+
+		return DB::table('teams')->select('name')
+						  ->orderBy('name', 'asc')
+						  ->get();
+	}
+		
 
 	/**~
 	 * The attributes excluded from the model's JSON form.

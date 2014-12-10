@@ -3,7 +3,7 @@
 @section('opening')
 
 	<link rel="stylesheet" href="bootstrap/login/css/style.css" media="screen" type="text/css" />
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="{{ url('js/jquery.min.js') }}"></script>
 	<script>
 		$(document).ready(function(){
   			$('.click').click(function(){
@@ -12,7 +12,16 @@
 				$('input[name=choosen-team]').val(event.target.id);
   			});
   		});
-		
+ 
+		$(document).ready(function(){
+			$(".submit").click(function(){
+				var value = $('input[name=choosen-team]').val() ;
+				if(value == ''){
+					alert("Ban chua chon Team ");
+				}
+			});
+		});
+	
 	</script>
 	<style type="text/css">
 		.selected{
@@ -27,6 +36,7 @@
 
 		h3{
 			text-align: center;
+			margin-top: 20px;
 		}	
 
 		p{
@@ -36,6 +46,10 @@
 		select{
 			width: 100px;
 			height: 30px;
+		}
+		.form-control{
+			width: 150px;
+			margin-left: 60px;
 		}
 
 	</style>
@@ -51,9 +65,7 @@
 		{{ Form::open(array('route'=>array('postmatch', $team1[$id]->matchid), 'method'=>'post', 'class'=>'match')) }}
 
 		<div class="col-lg-12" style="margin-top: 50px">
-			@if(Session::has('notification'))
-				<p><h2 style="color: red; text-align: center">{{ Session::get('notification') }}</h2></p>
-			@endif	
+			<p><h2 style="color: red; text-align: center; margin-bottom: 50px">Click vào logo để chọn đội</h2></p>
 			<div class="col-lg-2"></div>
 			<div class="col-lg-3">
 				<p class= "click">
@@ -68,7 +80,7 @@
 					<h3> {{ 'Tỷ lệ: '. $team1[$id]->rate }}</h3>
 					@if(Match::find($id)->status == "")
 
-						<h3>{{ Form::select('betmoney', array('100000'=>'100K','200000'=>'200K','300000'=>'300K','400000'=>'400K','500000'=>'500K')) }}</h3>
+						<h3>{{ Form::select('betmoney', array('100000'=>'100K','200000'=>'200K','300000'=>'300K','400000'=>'400K','500000'=>'500K'), '', array('class'=>'form-control')) }}</h3>
 					
 					@endif
 				</p>
@@ -93,7 +105,11 @@
 					<fieldset class="clearfix">
 						@if(Match::find($id)->status == "")
 							
-							<p> {{ Form::submit('Submit') }} </p>
+							<p> {{ Form::submit('ACCEPT BET', array('class'=>'submit btn btn-lg btn-success')) }} </p>
+
+						@elseif(Match::find($id)->status == "Closed")
+
+							<p style="font-size: 2em; color: red">  Closed </p>
 							
 						@endif
 					</fieldset>

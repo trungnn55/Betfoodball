@@ -13,7 +13,7 @@ class AdminController extends BaseController{
 */
 	public function getAdminAddMatch(){
 
-		$team = Team::all();
+		$team = Team::getTeam();
 		$league = Team::$league;
 		return View::make('addmatch')->with(array('team'=>$team,'league'=>$league));
 	}
@@ -96,11 +96,16 @@ class AdminController extends BaseController{
 
 		if(Input::get('team1goal') == '' || Input::get('team2goal') == ''){
 			$match->status = Input::get('status');
+			$match->result = '';
 			$match->save();
-			$matchid = BetMatch::getBetMatchId($id)[0]->id;
-			BetMatch::find($matchid)->money = '';
-			BetMatch::find($matchid)->save();
-			return Redirect::route('index');
+			if(null!= BetMatch::getBetMatchId($id)){
+				$matchid = BetMatch::getBetMatchId($id)[0]->id;
+				BetMatch::find($matchid)->money = '';
+				BetMatch::find($matchid)->save();
+				return Redirect::route('index');
+			}
+			else
+				return Redirect::route('index');
 		}
 
 
@@ -112,7 +117,7 @@ class AdminController extends BaseController{
 		$rate2 = substr($match->rate, $key+1);
 		$match->result = Input::get('team1goal') . ':' . Input::get('team2goal');
 		$score1 = $rate1 + Input::get('team1goal');
-		$score2 = $rate2 + Input::get('team2goal');	
+		$score2 = $rate2 + Input::get('team2goal');
 		$match->status = (String)($score1 - $score2);
 		
 		$match->save();
@@ -129,6 +134,7 @@ class AdminController extends BaseController{
 	|	function getReUpdateResult 
 	|	function postReUpdateResult
 	*/ 
+
 	public function getReUpdateResult($id){
 
 		$r1 = Match::getResult('matchs.team1');
@@ -183,7 +189,56 @@ class AdminController extends BaseController{
 		Account::getReturnMoney($id);
 
 		return Redirect::route('index');
-	} 
+	}
+
+	/*---------------------------------------------
+	|
+	|	function getUpdateScore 
+	|	function postUpdateScore
+	*/ 
+
+	public function getUpdateScore($id){
+
+		$t1 = Match::getMatchesTeam('matchs.team1');
+
+		foreach($t1 as $value){
+
+			$team1[$value->matchid] = $value; 
+		}
+
+		$t2 = Match::getMatchesTeam('matchs.team2');
+
+		foreach($t2 as $value){
+
+			$team2[$value->matchid] = $value; 
+		}
+
+		return View::make('score')->with( array( 'team1'=>$team1,'team2'=>$team2, 'id'=> $id ));
+	}
+
+	public function postUpdateScore($id){
+		
+		$user = Auth::User();
+		$match = Match::find($id);
+		$rule = Match::$rules['score'];
+		$validation = Validator::make(Input::all(), $rule);
+		if($validation->fails())
+			return Redirect::route('updatescore', $id)->withErrors($validation);
+
+		$match->result = Input::get('team1goal') . ':' . Input::get('team2goal');
+
+		$key = strpos($match->rate,':');
+		$rate1 = substr($match->rate, 0, $key);
+		$rate2 = substr($match->rate, $key+1);
+		$match->result = Input::get('team1goal') . ':' . Input::get('team2goal');
+		$score1 = $rate1 + Input::get('team1goal');
+		$score2 = $rate2 + Input::get('team2goal');
+		$match->status = 'Closed';	
+		
+		$match->save();
+				
+		return Redirect::route('index');
+	}
 
 	public function getDeleteMatch($id){
 

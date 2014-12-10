@@ -1,13 +1,12 @@
 <html>
 <head>
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="js/jquery-1.11.0.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('select').change(function(){
 			var id = $(this).attr('id');
 			var value = $(this).val();
 			if(id =='team1'){
-				alert(value);
 				$('#team2 option').each(function(){
       				if (this.value == value)
         				$(this).hide();

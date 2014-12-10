@@ -11,7 +11,7 @@
 			text-align: center;
 		}
 		h3{
-			margin-top: 50px;
+			margin-top: 30px;
 			text-align: center;
 		}
 
@@ -24,29 +24,28 @@
 
 
 <div id="page-wrapper">
-	@if(Auth::User()->manager == 1)
-		{{ link_to_route('admin.addteam', 'Add Team') . "<br>"}}
-		{{ link_to_route('admin.addmatch', 'Add Match') }}
-	@endif
+
 	<div class="container-fluid">
 		<div class="col-lg-12">
 			
 			<div class="col-lg-2"></div>
 			<div class="col-lg-8">
 
-				<div class="table-responsive">
+				<div class="table-responsive" style="margin-top: 50px">
 					<table class="table table-hover">
 					@for($i = 0; $i < count($team1); $i++)
 						<tr>
 							<td class= "click"><p>{{ HTML::image($team1[$i]->logo, '', array('class'=>'logo' )). "<br>" .  $team1[$i]->name}}</p></td> 
 							<td>
-								
-								<h3>{{ link_to_route('match',$team1[$i]->league, $team1[$i]->matchid) }}</h3>
 
+								<h3>{{ $team1[$i]->league }}</h3>								
+								<h3>{{ link_to_route('match', 'Chọn đội', $team1[$i]->matchid, array('class'=>'btn btn-primary btn-lg')) }}</h3>
+								<h3>{{ $team1[$i]->result }} </h3>
 								<p>
-								@if(Auth::user()->manager == 1)
+								@if( Auth::user()->manager == 1 )
 
-									{{ link_to_route('result','Update Result', $team1[$i]->matchid) }}
+									{{ link_to_route( 'result','Update Result', $team1[$i]->matchid ) . "<br>"}}
+									{{ link_to_route( 'updatescore', 'Update Score', $team1[$i]->matchid ) }}
 
 								@endif
 								
@@ -58,7 +57,7 @@
 						</tr>
 					@endfor
 
-					@for($i = count($result1)-1; $i >= 0; $i--)
+				<!--	@for($i = count($result1)-1; $i >= 0; $i--)
 						<tr>
 							<td class= "click"><p>{{ HTML::image($result1[$i]->logo, '', array('class'=>'logo' )). "<br>" .  $result1[$i]->name}}</p> </td>
 								<td>
@@ -72,7 +71,7 @@
 								<td class = "click"><p>{{ HTML::image($result2[$i]->logo, '', array('class'=>'logo' ) ). "<br>" .  $result2[$i]->name }}</p></td>
 							</td>
 						</tr>
-					@endfor
+					@endfor -->
 
 					</table>
 				</div>

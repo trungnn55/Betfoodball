@@ -118,10 +118,13 @@ class BetMatch extends Eloquent implements UserInterface, RemindableInterface {
 	}
 
 	public static function getTotalBetMoney(){
-
+		
 		$betName =  BetMatch::getBetName();
+		if($betName == null){
+			dd($betName);
+			$totalBetMoney = 0;}
+		else
 		foreach($betName as $value)
-
 			$totalBetMoney[$value->id] = DB::table('userbetmatch')->where('betname', '=', $value->betname)->sum('money');
 
 			return $totalBetMoney;
@@ -132,8 +135,9 @@ class BetMatch extends Eloquent implements UserInterface, RemindableInterface {
 	public static function getBetMatch($user){
 
 		return DB::table('userbetmatch')->join('matchs', 'userbetmatch.idmatch', '=', 'matchs.id')
-										->select('userbetmatch.betname', 'matchs.team1', 'matchs.team2', 'matchs.status', 'money', 'teampick')
+										->select('userbetmatch.betname', 'matchs.team1', 'matchs.team2', 'matchs.status', 'money', 'teampick', 'matchs.result', 'matchs.id')
 										->where('betname', '=', $user)
+										->orderBy('Matchs.Created_at', 'asc')
 										->get();
 	}
 

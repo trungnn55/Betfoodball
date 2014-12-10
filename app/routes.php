@@ -43,6 +43,8 @@ Route::post('match/{id}', array('as'=>'postmatch', 'uses'=> 'BetController@postM
 Route::get('viewmatch/{id}', array('as'=>'viewmatch', 'before'=>'guest', 'uses'=>'BetController@getViewMatch'));
 
 // Update Result
+Route::get('score/{id}', array('as'=>'updatescore', 'before'=>'auth.admin', 'uses'=>'AdminController@getUpdateScore'));
+Route::post('score/{id}', array('as'=>'postupdatescore', 'before'=>'auth.admin', 'uses'=>'AdminController@postUpdateScore'));
 Route::get('result/{id}', array('as'=>'result', 'before'=>'auth.admin', 'uses'=>'AdminController@getUpdateResult'));
 Route::post('result/{id}', array('as'=>'postresult', 'uses'=>'AdminController@postUpdateResult'));
 Route::get('updateresult/{id}', array('as'=>'updateresult', 'before'=>'auth.admin', 'uses'=>'AdminController@getReupdateResult'));

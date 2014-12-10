@@ -44,7 +44,7 @@ class Match extends Eloquent implements UserInterface, RemindableInterface {
 	public static function getMatchesTeam($value){
 
 		return DB::table('matchs')->join('teams', $value, '=', 'teams.name')
-								->select('matchs.id as matchid', 'teams.logo', 'teams.name', 'matchs.rate', 'teams.id as teamid', 'matchs.league')
+								->select('matchs.id as matchid', 'teams.logo', 'teams.name', 'matchs.rate', 'teams.id as teamid', 'matchs.league', 'matchs.result')
 								->where('matchs.status', '=', '')
 								->orWhere('matchs.status', '=', 'Closed')
 								->orderBy('matchs.id', 'desc')->limit(5)->get();
