@@ -6,7 +6,7 @@
 	<script src="{{ url('js/jquery.min.js') }}"></script>
 	<script>
 		$(document).ready(function(){
-  			$('.click').click(function(){
+  			$('.click').click(function( event ){
   				$('p').removeClass('selected');
 				$(this).addClass('selected');
 				$('input[name=choosen-team]').val(event.target.id);

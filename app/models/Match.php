@@ -69,11 +69,21 @@ class Match extends Eloquent implements UserInterface, RemindableInterface {
 		$match->save();
 	}
 
-	public static function getRate($string, $value){
+	public static function getRate($rate){
 
-		$key = strpos($string, $value);
-		$rate1 = substr($string, 0, $key);
-		$rate2 = substr($string, $key+1);
-		return $rate1/$rate2;
+		$sum = 0;		
+
+		$rate2_arr_by_space = explode(" ", $rate);
+
+		foreach ($rate2_arr_by_space as $item) {
+			$rate2_arr = explode('/', $item);
+			if (count($rate2_arr) > 1) {
+				$sum += (float)$rate2_arr[0] / (float)$rate2_arr[1];
+			}
+			else
+				$sum += (float)$rate2_arr[0];
+		}
+
+		return $sum;
 	}
 }

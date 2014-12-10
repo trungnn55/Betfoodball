@@ -119,15 +119,12 @@ class AdminController extends BaseController{
 		$rate1 = substr($match->rate, 0, $key);
 		$rate2 = substr($match->rate, $key+1);
 		$match->result = Input::get('team1goal') . ':' . Input::get('team2goal');
+
+		$rate1 = Match::getRate($rate1);
+		$rate2 = Match::getRate($rate2);
+
 		$score1 = $rate1 + Input::get('team1goal');
 		$score2 = $rate2 + (float)Input::get('team2goal');
-
-		if(strstr($rate1, '/'))
-
-			$score1 = Match::getRate($rate1, '/') + Input::get('team1goal');
-
-		elseif(strstr($rate2, '/'))
-			$score2 = Match::getRate($rate2, '/') + Input::get('team2goal');
 
 		$match->status = (String)($score1 - $score2);
 		
