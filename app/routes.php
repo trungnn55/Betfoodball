@@ -23,7 +23,7 @@ Route::get('register', array( 'as'=>'register', 'uses'=>'AccountController@getRe
 Route::post('register', 'AccountController@postRegister');
 
 // Index
-Route::get('index', array( 'as'=>'index', 'before'=>'guest', 'uses'=>'BetController@getIndex'));
+Route::get('/', array( 'as'=>'index', 'before'=>'guest', 'uses'=>'BetController@getIndex'));
 
 // Change Password
 Route::get('changepassword', array('as'=>'changepassword', 'uses'=>'AccountController@getChangePassword'));
