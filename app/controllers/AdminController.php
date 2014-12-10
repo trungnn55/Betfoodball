@@ -97,6 +97,8 @@ class AdminController extends BaseController{
 		if(Input::get('team1goal') == '' || Input::get('team2goal') == ''){
 			$match->status = Input::get('status');
 			$match->result = '';
+			if(Input::get('rate') != '')
+				$match->rate = Input::get('rate');
 			$match->save();
 			if(null!= BetMatch::getBetMatchId($id)){
 				$matchid = BetMatch::getBetMatchId($id)[0]->id;

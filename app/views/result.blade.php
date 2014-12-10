@@ -65,9 +65,9 @@
 			<div class="col-lg-2">
 				<p>
 					<h3>VS</h3>
-					<h3> {{ 'Tỷ lệ: '. $team1[$id]->rate }}</h3>
+					<h3> {{ Form::text('rate', '', array('placeholder'=>$team1[$id]->rate, 'style'=>'width:50%')) }}</h3>
 					<p style="margin: 50px">{{ Form::select('status', array('Closed'=>'Closed', ''=>'Opening'), '', array('class'=>'form-control', 'style'=>'width: 50%;
-			margin-left: 42px;')) }}</p>
+						margin-left: 42px;')) }}</p>
 					<p>{{ link_to_route('deletematch','Delete Match', $id) }}</p>
 				</p>
 			</div>
